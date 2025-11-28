@@ -1,4 +1,5 @@
 # Data-Warehousing
+![Data Warehousing](header.svg)
 ## Statement
 Given the ACME-Flying Use Case, this project aims to design a Data Warehouse that allows perform descriptive analysis based in three parts:
 1. Creation of a multidimensional database design that allows a correct execution of the queries. To draw the multidimensional schema the graphical editor draw.io was used.
