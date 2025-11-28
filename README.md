@@ -24,9 +24,23 @@ The design ETL process followed the next steps:
 * We also extracted the data from the additional data sources (`aircraft-manufacturerinfo-lookup.csv` and `maintenance_personnel.csv`)
 
 #### Transformation
-* We integrated the data coming from `AIMS` and `AMOS` data sources based on their shared attributes.
-* Next, we complemented 
+- We integrated the data coming from `AIMS` and `AMOS` data sources based on their shared attributes.
+- Next, we complemented the operational data coming from `AIMS` and `AMOS` by means of performing a lookup to the external data sources about
+   - *Aircraft manufacturer information* (`aircraft-manufacturerinfo-lookup.csv`)such that with each aircraft registration code, the ETL also provides its manufacturer registration code, the aircraft model and manufacturer.
+   - *Maintenance personnel employement place* (`maintenance_personnel.csv`) such that for each person from the maintenance personnel the ETL also provides information at which airport this person works.
+- We derived additional attributes, by means of, but not limited to value convserion and formula calculation, in order to enable the calculation of the requested KPIs.
+- Lastly, we also improved the quality of the data sources by checking and fixing only the following three business rules:
+   - In a Flight, actualArrival is porterior to actualDeparture, related to BR-23.
+   - Two non-cancelled Flights of the same aircraft cannot overlap, related to BR-21.
+   - The aircraft registration in a post flight report must be an aircraft.
+ 
+#### Loading
+* This part consisted in the creation of the DW in a DuckDB database.
+* We loaded the dimension tables of the multidimensional schema, paying special attention to keep the different aggregation levels.
+* Finally, we loaded the fact tables of our multidimensional schema, allowing the calculation of all the metrics needed to generate the required KPIs.
 
+## Comparison of the queries over the Data Warehouse and the sources.
+In the last section we focused on checking the queries over the raw data in PostgreSQL and reimplement them over the DW in DuckDB using the `query__test.py` file. 
 
 
 
